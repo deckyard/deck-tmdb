@@ -5,8 +5,6 @@
 [book]
 title = "@deckyard/tmdb"
 description = "A typed Jennifer client for The Movie Database: v4 auth, accounts and lists over the full v3 catalogue."
-authors = ["the deck-tmdb contributors"]
-authorsLabel = "Maintained by"
 language = "en"
 src = "docs"
 

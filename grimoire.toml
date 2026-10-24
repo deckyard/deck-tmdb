@@ -1,0 +1,36 @@
+# Grimoire book configuration for the @deckyard/tmdb deck documentation.
+# Build with:  grimoire build      (output lands in site/)
+# Preview with: grimoire serve --watch
+
+[book]
+title = "@deckyard/tmdb"
+description = "A typed Jennifer client for The Movie Database: v4 auth, accounts and lists over the full v3 catalogue."
+authors = ["the deck-tmdb contributors"]
+authorsLabel = "Maintained by"
+language = "en"
+src = "docs"
+
+[build]
+out = "site"
+# Prune the output directory so a deleted chapter stops being published.
+clean = true
+jobs = 0
+
+[html]
+theme = "grimoire"
+mode = "auto"
+navPosition = "left"
+tocPosition = "right"
+tocDepth = 3
+sectionNumbers = true
+repoUrl = "https://github.com/deckyard/deck-tmdb"
+repoLabel = "Source"
+editUrl = "https://github.com/deckyard/deck-tmdb/edit/main/docs/{path}"
+
+# Highlight Jennifer at build time: no CDN, no JavaScript, works with scripting off.
+footer = 'Part of <a href="https://github.com/deckyard">Deckyard</a>, community decks for <a href="https://jennifer-lang.dev/">Jennifer</a>. Rendered with <a href="https://grimoire.jennifer-lang.dev/">Grimoire</a>.'
+[highlight]
+enabled = true
+
+[search]
+enabled = true

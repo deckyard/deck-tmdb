@@ -1,0 +1,42 @@
+# The deck manifest, in the shape the registry specifies:
+# https://registry.jennifer-lang.dev/manual/publishing-a-deck.html
+#
+# Only `src/` is installed into a consumer's vendor tree, so `src/tmdb.j` is the
+# entry module named after the deck and `src/topics/*.j` are the include files it
+# splices into itself. `docs/`, `examples/` and `tools/` stay outside it
+# deliberately: they are the book, the worked programs and the CI helper, none of
+# which a consumer should be made to vendor.
+
+[package]
+name = "@deckyard/tmdb"
+version = "0.1.0"
+description = "A typed client for The Movie Database: v4 auth, accounts and lists over the full v3 catalogue"
+license = "LGPL-3.0-only"
+authors = ["mplx <mplx@jennifer-lang.dev>"]
+# What the code actually reaches for:
+#   net - every verb is an HTTPS call to api.themoviedb.org, through the `rest`
+#         and `http` modules. `jennifer-tiny` stubs `net`, so the deck needs the
+#         default binary; the pure helpers (image URLs, media-kind names, the
+#         discover filter builder, every JSON fold) still work without it, which
+#         is what the test suite exercises.
+# No `exec`: this deck spawns no processes. No `sql`.
+capabilities = ["net"]
+# At most five are used, in this order.
+keywords = ["tmdb", "movies", "television", "rest", "api"]
+
+# Project URLs by role. `deck` is mandatory to publish: it is where the registry
+# reads this manifest from, so it points at the file itself on the default
+# branch rather than at the repository around it.
+[package.urls]
+deck = "https://raw.githubusercontent.com/deckyard/deck-tmdb/main/deck.toml"
+homepage = "https://github.com/deckyard/deck-tmdb"
+manual = "https://deckyard.github.io/deck-tmdb/"
+
+[engines]
+# The floor every source file in this repository declares in its own header
+# pragma, and the release the test suite is run against in CI. 0.25.0 is the
+# release that carries every library and module this deck reaches for.
+jennifer = ">=0.25.0"
+
+# No [decks] table: this deck depends on no other deck. `rest`, `http`, `uri` and
+# `json` are system modules and libraries that ship with the interpreter.

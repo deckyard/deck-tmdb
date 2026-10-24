@@ -1,0 +1,18 @@
+# Grimoire build output
+site/
+book.pdf
+
+# Release staging
+stage/
+tmdb-*.tar.gz
+tmdb-*.tar.gz.sha256
+
+# Credentials - the deck reads its tokens from the environment, and a stray
+# .env is the usual way one ends up committed.
+.env
+.env.local
+dist/
+vendor/
+.jennifer-src/
+.ci-fixtures/
+.jfmt-*.tmp

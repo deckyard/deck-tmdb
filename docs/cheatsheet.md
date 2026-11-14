@@ -7,7 +7,8 @@ The docblocks in `src/topics/` and the guides give the details.
 - Ids must be positive and pages run from 1 to `MAX_PAGE` (500); both are
   checked before the request.
 - A `null` or missing field reads as `""`, `0`, `false` or `[]`.
-- Every failure is `Error{kind: "tmdb"}`; see [Errors](errors.md).
+- Every failure is a `TmdbError` (kind `"tmdb"`), except a reply past the
+  transport's cap (`Error{kind: "limit"}`); see [Errors](errors.md).
 
 ## Client and plumbing
 
@@ -47,6 +48,17 @@ Building and configuring a client, and the escape hatches for endpoints without 
 | `mediaKindName(kind as MediaKind)` | `string` | The `media_type` string TMDB writes for a media kind. |
 | `parseMediaKind(name as string)` | `MediaKind` | Read a TMDB `media_type` string as a media kind. |
 | `year(date as string)` | `string` | The year of a TMDB `YYYY-MM-DD` date, or "" when there is none. |
+
+### `TmdbError`
+
+Every error of kind `"tmdb"`.
+
+| Field | Meaning |
+|---|---|
+| `kind as string` | always `"tmdb"` |
+| `message as string` | what went wrong; a refusal names the request, `HTTP <status>` and TMDB's `status_message` |
+| `status as int` | the HTTP status TMDB answered; 0 when the failure is not a refused request |
+| `statusCode as int` | TMDB's own `status_code` (7 an invalid key, 34 not found, ...); 0 when it gave none |
 
 ### `MediaKind`
 

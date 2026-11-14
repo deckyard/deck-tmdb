@@ -545,6 +545,44 @@ func decodeANonJsonReply() {
     decodeChecked(rest.Response{status: 200, headers: {}, body: "not json"}, "GET /3/movie/550");
 }
 
+# A refusal is a TmdbError with the HTTP status and TMDB's status_code.
+func testARefusalIsATmdbError() {
+    try {
+        decodeChecked(
+            rest.Response{
+                status: 401,
+                headers: {},
+                body: '{"success": false, "status_code": 7, "status_message": "Invalid API key."}'
+            },
+            "GET /3/movie/550");
+        throw Error{kind: "missed", message: "decodeChecked did not throw"};
+    } catch (e) {
+        testing.assertEqual($e.kind, "tmdb");
+        testing.assertEqual($e.status, 401);
+        testing.assertEqual($e.statusCode, 7);
+        testing.assertEqual($e.message, "GET /3/movie/550 failed: HTTP 401: Invalid API key.");
+    }
+    try {
+        decodeChecked(rest.Response{status: 502, headers: {}, body: "<html></html>"}, "GET /3/x");
+        throw Error{kind: "missed", message: "decodeChecked did not throw"};
+    } catch (e) {
+        testing.assertEqual($e.status, 502);
+        testing.assertEqual($e.statusCode, 0);
+    }
+    try {
+        rethrown("GET /3/x", "limit", "too big");
+        throw Error{kind: "missed", message: "rethrown did not throw"};
+    } catch (e) {
+        testing.assertEqual($e.kind, "limit");
+    }
+    try {
+        raiseError("local");
+        throw Error{kind: "missed", message: "raiseError did not throw"};
+    } catch (e) {
+        testing.assertEqual($e.status, 0);
+    }
+}
+
 func testDecodeBodyNamesTheRequest() {
     testing.assertThrows("decodeGarbage", "tmdb");
 }
@@ -584,19 +622,19 @@ func refusalOf(verb as func) {
     } catch (e) {
         return $e;
     }
-    return Error{kind: "", message: "the request was not refused"};
+    return TmdbError{kind: "", message: "the request was not refused", status: 0, statusCode: 0};
 }
 
 # Assert that a verb asked for `request` (method and full URL) before it was
 # stopped.
 func assertRequested(verb as func, request as string) {
-    def e as Error init refusalOf($verb);
+    def e as TmdbError init refusalOf($verb);
     testing.assertEqual($e.kind, "tmdb");
     testing.assertContains($e.message, $request + " failed: ");
 }
 
 func testUnsendableClientNeverReachesTheSocket() {
-    def e as Error init refusalOf(callLists);
+    def e as TmdbError init refusalOf(callLists);
     testing.assertContains($e.message, "control character");
 }
 

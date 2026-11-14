@@ -9,7 +9,8 @@ A typed [Jennifer](https://jennifer-lang.dev) client for
 API generations: the v3 catalogue (search, discovery, films, series, people,
 images, watch providers) and v4 user authentication, accounts and custom
 lists. Replies are folded into structs, arguments are checked before the
-request, and every failure is `Error{kind: "tmdb"}`.
+request, and every failure is a `TmdbError` (kind `"tmdb"`, with the HTTP
+`status` and TMDB's `statusCode`).
 
 ## Install
 

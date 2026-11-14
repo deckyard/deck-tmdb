@@ -572,14 +572,46 @@ func blankClient() {
 }
 
 /**
+ * A failed TMDB call. Every error of kind `"tmdb"` is one, so its fields are
+ * safe to read once the kind matches.
+ *
+ * @field kind {string} always `"tmdb"`
+ * @field message {string} what went wrong; a refusal names the request, `HTTP <status>` and TMDB's `status_message`
+ * @field status {int} the HTTP status TMDB answered (401, 404, 429, ...); 0 when the failure is not a refused request
+ * @field statusCode {int} TMDB's own `status_code` from the refusal body (7 an invalid key, 34 not found, ...); 0 when it gave none
+ */
+export def struct TmdbError {
+    kind as string,
+    message as string,
+    status as int,
+    statusCode as int
+};
+
+/**
  * Throw the deck's error.
  *
  * @param message {string} the failure, as a sentence
- * @throws {Error} kind "tmdb" always
+ * @throws {TmdbError} kind "tmdb" always, status 0
  * @internal
  */
 func raiseError(message as string) {
-    throw Error{kind: "tmdb", message: $message, file: "", line: 0, col: 0};
+    throw TmdbError{kind: "tmdb", message: $message, status: 0, statusCode: 0};
+}
+
+/**
+ * Rethrow a transport failure as the deck's error; a reached cap stays
+ * kind "limit".
+ *
+ * @param what {string} the request, for the message
+ * @param kind {string} the caught error's kind
+ * @param message {string} the caught error's message
+ * @internal
+ */
+func rethrown(what as string, kind as string, message as string) {
+    if ($kind == "limit") {
+        throw Error{kind: "limit", message: $what + " failed: " + $message};
+    }
+    raiseError($what + " failed: " + $message);
 }
 
 /**
@@ -817,7 +849,7 @@ func runGet(r as rest.Client, path as string, query as map of string to string, 
     try {
         return rest.get($r, $path, $query);
     } catch (e) {
-        raiseError("GET " + $url + " failed: " + $e.message);
+        rethrown("GET " + $url, $e.kind, $e.message);
     }
     return rest.Response{status: 0, headers: {}, body: ""};
 }
@@ -858,7 +890,7 @@ func runBody(
             requestPolicy($c));
         return rest.Response{status: $r.status, headers: $r.headers, body: $r.body};
     } catch (e) {
-        raiseError($what + " failed: " + $e.message);
+        rethrown($what, $e.kind, $e.message);
     }
     return rest.Response{status: 0, headers: {}, body: ""};
 }
@@ -887,12 +919,17 @@ func queryString(params as map of string to string) {
  * @param reply {rest.Response} the raw response
  * @param what {string} the method and URL, for the error message
  * @return {json.Value} the decoded body
- * @throws {Error} kind "tmdb" on a non-2xx status or a body that is not JSON
+ * @throws {TmdbError} kind "tmdb" on a non-2xx status or a body that is not JSON
  * @internal
  */
 func decodeChecked(reply as rest.Response, what as string) {
     if ($reply.status < 200 or $reply.status >= 300) {
-        raiseError($what + " failed: " + failureText($reply));
+        throw TmdbError{
+            kind: "tmdb",
+            message: $what + " failed: " + failureText($reply),
+            status: $reply.status,
+            statusCode: statusCodeOf($reply.body)
+        };
     }
     return decodeBody($reply.body, $what);
 }
@@ -911,6 +948,25 @@ func failureText(reply as rest.Response) {
         return $status + ": " + $said;
     }
     return $status + ": " + statusHint($reply.status);
+}
+
+/**
+ * The `status_code` out of an error body, 0 when there is none.
+ *
+ * @param body {string} the raw response body
+ * @return {int} TMDB's own code, or 0
+ * @internal
+ */
+func statusCodeOf(body as string) {
+    try {
+        def doc as json.Value init json.decode($body);
+        if (json.has($doc, "/status_code")) {
+            return json.asInt($doc, "/status_code");
+        }
+        return 0;
+    } catch (e) {
+        return 0;
+    }
 }
 
 /**

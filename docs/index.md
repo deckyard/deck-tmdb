@@ -39,8 +39,9 @@ What the deck does on top of the HTTP API:
 - Arguments are checked before the request: a zero id, a page outside
   1..500, an image size that does not exist for that kind, a path carrying
   `..`.
-- Every failure is `Error{kind: "tmdb"}`, carrying TMDB's own
-  `status_message` when there is one.
+- Every failure is a `tmdb.TmdbError` (kind `"tmdb"`), carrying TMDB's own
+  `status_message` when there is one, and the HTTP `status` and TMDB's
+  `statusCode` as fields.
 - `tmdb.call`, `tmdb.callPost`, `tmdb.callPut` and `tmdb.callDelete` reach
   any endpoint without a typed verb.
 

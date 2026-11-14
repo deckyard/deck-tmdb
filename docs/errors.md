@@ -1,18 +1,27 @@
 # Errors
 
-Every failure the deck raises has one shape, so one `catch` covers a bad
-argument, a transport failure and a refusal from the server:
+Every failure the deck raises is a `tmdb.TmdbError`, so one `catch` covers a
+bad argument, a transport failure and a refusal from the server:
 
 ```jennifer
-Error{kind: "tmdb", message: "...", file: "", line: 0, col: 0}
+TmdbError{kind: "tmdb", message: "...", status: 0, statusCode: 0}
 ```
+
+`status` is the HTTP status of a refusal and `statusCode` TMDB's own
+`status_code` from its body (7 an invalid key, 34 not found); both are 0 for
+a bad argument or a transport failure. The one exception is a reply body past
+the transport's size cap, which stays `Error{kind: "limit"}`.
 
 ```jennifer
 try {
     def film as tmdb.Movie init tmdb.movie($c, 999999999);
     io.printf("%s\n", $film.title);
 } catch (e) {
-    io.printf("could not read the film: %s\n", $e.message);
+    if ($e.kind == "tmdb" and $e.status == 404) {
+        io.printf("no such film\n");
+    } else {
+        io.printf("could not read the film: %s\n", $e.message);
+    }
 }
 ```
 

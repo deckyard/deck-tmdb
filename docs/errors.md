@@ -4,7 +4,12 @@ Every failure the deck raises is a `tmdb.TmdbError`, so one `catch` covers a
 bad argument, a transport failure and a refusal from the server:
 
 ```jennifer
-TmdbError{kind: "tmdb", message: "...", status: 0, statusCode: 0}
+export def struct TmdbError {
+    kind as string,       # always "tmdb"
+    message as string,    # "tmdb: ..."
+    status as int,        # the HTTP status of a refusal, else 0
+    statusCode as int     # TMDB's own status_code, else 0
+};
 ```
 
 `status` is the HTTP status of a refusal and `statusCode` TMDB's own

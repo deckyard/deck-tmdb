@@ -1,6 +1,6 @@
 [package]
 name = "@deckyard/tmdb"
-version = "0.2.0-dev"
+version = "0.2.0"
 description = "A typed client for The Movie Database: v4 auth, accounts and lists over the full v3 catalogue"
 license = "LGPL-3.0-only"
 authors = ["mplx <mplx@jennifer-lang.dev>"]

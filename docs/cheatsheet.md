@@ -8,7 +8,8 @@ The docblocks in `src/topics/` and the guides give the details.
   checked before the request.
 - A `null` or missing field reads as `""`, `0`, `false` or `[]`.
 - Every failure is a `TmdbError` (kind `"tmdb"`), except a reply past the
-  transport's cap (`Error{kind: "limit"}`); see [Errors](errors.md).
+  transport's cap (`Error{kind: "limit"}`) and a server that cannot be reached
+  (`net.NetError`, kind `"net"`); see [Errors](errors.md).
 
 ## Client and plumbing
 

@@ -1,7 +1,7 @@
 # Errors
 
 Every failure the deck raises is a `tmdb.TmdbError`, so one `catch` covers a
-bad argument, a transport failure and a refusal from the server:
+bad argument, a timeout and a refusal from the server:
 
 ```jennifer
 export def struct TmdbError {
@@ -14,8 +14,9 @@ export def struct TmdbError {
 
 `status` is the HTTP status of a refusal and `statusCode` TMDB's own
 `status_code` from its body (7 an invalid key, 34 not found); both are 0 for
-a bad argument or a transport failure. The one exception is a reply body past
-the transport's size cap, which stays `Error{kind: "limit"}`.
+a bad argument or a timeout. Two failures keep their own kind: a reply body
+past the transport's size cap stays `Error{kind: "limit"}`, and a server that
+cannot be reached is a `net.NetError` (kind `"net"`, see Transport below).
 
 ```jennifer
 try {
@@ -80,8 +81,11 @@ the message gives a hint for the status instead:
 A 2xx reply that is not JSON throws with the method and URL and
 `did not answer JSON`.
 
-**Transport.** A timeout, DNS failure or TLS error is wrapped with the method
-and URL:
+**Transport.** A connection that cannot be made or breaks before an answer
+(refused, reset, unreachable, DNS, TLS, closed) is the `http` module's
+`net.NetError`, kind `"net"`, passed on unchanged: `reason` says which, and
+`sent` false means TMDB never got the request, so it is safe to repeat. A
+timeout is wrapped with the method and URL:
 
 ```
 GET https://api.themoviedb.org/3/movie/550 failed: read timed out

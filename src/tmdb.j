@@ -11,8 +11,9 @@
  * (films, series, seasons, episodes, people, credits, images, videos,
  * genres, watch providers, discovery). The v4 read access token is a
  * bearer credential both accept, so one `Client` reaches both. Replies are
- * folded into value-semantic structs, and every failure is
- * `Error{kind: "tmdb"}`. `call`, `callPost`, `callPut` and `callDelete`
+ * folded into value-semantic structs, and every failure is a `TmdbError`
+ * (kind `"tmdb"`), except a reply over the size cap (kind `"limit"`) and a
+ * server that cannot be reached (`net.NetError`, kind `"net"`). `call`, `callPost`, `callPut` and `callDelete`
  * reach endpoints without a typed verb.
  *
  * The implementation is split into topic files spliced in with `include`;

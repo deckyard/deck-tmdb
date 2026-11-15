@@ -424,8 +424,9 @@ export func hasUser(c as Client) {
  * @param path {string} the request path, e.g. "/3/movie/550/lists"
  * @param params {map of string to string} query parameters, {} for none
  * @return {json.Value} the decoded response body
- * @throws {Error} kind "tmdb" on a bad path, a transport failure, a non-2xx
- *                 status, or a body that is not JSON
+ * @throws {Error} kind "tmdb" on a bad path, a timeout, a non-2xx status, or
+ *                 a body that is not JSON; a `net.NetError` (kind "net") when
+ *                 the server cannot be reached
  * @example
  *   def v as json.Value init tmdb.call($c, "/3/movie/550/lists", {"page": "1"});
  *   io.printf("in %d lists\n", json.asInt($v, "/total_results"));
@@ -443,8 +444,9 @@ export func call(c as Client, path as string, params as map of string to string)
  * @param path {string} the request path, e.g. "/4/list"
  * @param body {json.Value} the request body
  * @return {json.Value} the decoded response body
- * @throws {Error} kind "tmdb" on a bad path, a transport failure, a non-2xx
- *                 status, or a body that is not JSON
+ * @throws {Error} kind "tmdb" on a bad path, a timeout, a non-2xx status, or
+ *                 a body that is not JSON; a `net.NetError` (kind "net") when
+ *                 the server cannot be reached
  */
 export func callPost(c as Client, path as string, body as json.Value) {
     return apiPost($c, ensurePath($path), $body);
@@ -459,8 +461,9 @@ export func callPost(c as Client, path as string, body as json.Value) {
  * @param path {string} the request path, e.g. "/4/list/7"
  * @param body {json.Value} the request body
  * @return {json.Value} the decoded response body
- * @throws {Error} kind "tmdb" on a bad path, a transport failure, a non-2xx
- *                 status, or a body that is not JSON
+ * @throws {Error} kind "tmdb" on a bad path, a timeout, a non-2xx status, or
+ *                 a body that is not JSON; a `net.NetError` (kind "net") when
+ *                 the server cannot be reached
  */
 export func callPut(c as Client, path as string, body as json.Value) {
     return apiPut($c, ensurePath($path), $body);
@@ -476,8 +479,9 @@ export func callPut(c as Client, path as string, body as json.Value) {
  * @param path {string} the request path, e.g. "/4/list/7/items"
  * @param body {json.Value} the request body, `json.map()` for none
  * @return {json.Value} the decoded response body
- * @throws {Error} kind "tmdb" on a bad path, a transport failure, a non-2xx
- *                 status, or a body that is not JSON
+ * @throws {Error} kind "tmdb" on a bad path, a timeout, a non-2xx status, or
+ *                 a body that is not JSON; a `net.NetError` (kind "net") when
+ *                 the server cannot be reached
  */
 export func callDelete(c as Client, path as string, body as json.Value) {
     return apiDelete($c, ensurePath($path), $body);
@@ -600,7 +604,7 @@ func raiseError(message as string) {
 
 /**
  * Rethrow a transport failure as the deck's error; a reached cap stays
- * kind "limit".
+ * kind "limit". Callers pass a `net.NetError` (kind "net") on before this.
  *
  * @param what {string} the request, for the message
  * @param kind {string} the caught error's kind
@@ -769,7 +773,8 @@ func logRequest(c as Client, verb as string, url as string, params as map of str
  * @param path {string} an already-validated path
  * @param params {map of string to string} query parameters
  * @return {json.Value} the decoded body
- * @throws {Error} kind "tmdb" on a transport failure or an unhappy status
+ * @throws {Error} kind "tmdb" on a timeout or an unhappy status; a
+ *   `net.NetError` (kind "net") when the server cannot be reached
  * @internal
  */
 func apiGet(c as Client, path as string, params as map of string to string) {
@@ -787,7 +792,8 @@ func apiGet(c as Client, path as string, params as map of string to string) {
  * @param path {string} an already-validated path
  * @param body {json.Value} the request body
  * @return {json.Value} the decoded body
- * @throws {Error} kind "tmdb" on a transport failure or an unhappy status
+ * @throws {Error} kind "tmdb" on a timeout or an unhappy status; a
+ *   `net.NetError` (kind "net") when the server cannot be reached
  * @internal
  */
 func apiPost(c as Client, path as string, body as json.Value) {
@@ -805,7 +811,8 @@ func apiPost(c as Client, path as string, body as json.Value) {
  * @param path {string} an already-validated path
  * @param body {json.Value} the request body
  * @return {json.Value} the decoded body
- * @throws {Error} kind "tmdb" on a transport failure or an unhappy status
+ * @throws {Error} kind "tmdb" on a timeout or an unhappy status; a
+ *   `net.NetError` (kind "net") when the server cannot be reached
  * @internal
  */
 func apiPut(c as Client, path as string, body as json.Value) {
@@ -823,7 +830,8 @@ func apiPut(c as Client, path as string, body as json.Value) {
  * @param path {string} an already-validated path
  * @param body {json.Value} the request body
  * @return {json.Value} the decoded body
- * @throws {Error} kind "tmdb" on a transport failure or an unhappy status
+ * @throws {Error} kind "tmdb" on a timeout or an unhappy status; a
+ *   `net.NetError` (kind "net") when the server cannot be reached
  * @internal
  */
 func apiDelete(c as Client, path as string, body as json.Value) {
@@ -835,20 +843,26 @@ func apiDelete(c as Client, path as string, body as json.Value) {
 }
 
 /**
- * Run a GET, translating any transport error into the deck's own.
+ * Run a GET, translating a transport error into the deck's own; a
+ * `net.NetError` and a reached cap keep their kinds.
  *
  * @param r {rest.Client} the configured REST client
  * @param path {string} the request path
  * @param query {map of string to string} query parameters
  * @param url {string} the full URL, for the error message
  * @return {rest.Response} the raw response, whatever its status
- * @throws {Error} kind "tmdb" wrapping a transport failure
+ * @throws {Error} kind "tmdb" wrapping a failed exchange; a `net.NetError`
+ *   (kind "net") passed on unchanged; kind "limit" for a reply over the cap
  * @internal
  */
 func runGet(r as rest.Client, path as string, query as map of string to string, url as string) {
     try {
         return rest.get($r, $path, $query);
     } catch (e) {
+        # a transport failure goes on as the net.NetError it is, fields intact
+        if ($e.kind == "net") {
+            throw $e;
+        }
         rethrown("GET " + $url, $e.kind, $e.message);
     }
     return rest.Response{status: 0, headers: {}, body: ""};
@@ -868,7 +882,8 @@ func runGet(r as rest.Client, path as string, query as map of string to string, 
  * @param body {json.Value} the request body
  * @param what {string} the method and URL, for the error message
  * @return {rest.Response} the raw response, whatever its status
- * @throws {Error} kind "tmdb" wrapping a transport failure
+ * @throws {Error} kind "tmdb" wrapping a failed exchange; a `net.NetError`
+ *   (kind "net") passed on unchanged; kind "limit" for a reply over the cap
  * @internal
  */
 func runBody(
@@ -890,6 +905,10 @@ func runBody(
             requestPolicy($c));
         return rest.Response{status: $r.status, headers: $r.headers, body: $r.body};
     } catch (e) {
+        # a transport failure goes on as the net.NetError it is, fields intact
+        if ($e.kind == "net") {
+            throw $e;
+        }
         rethrown($what, $e.kind, $e.message);
     }
     return rest.Response{status: 0, headers: {}, body: ""};

@@ -768,3 +768,20 @@ func testClientFromEnvRefusesAMissingOrBadSetting() {
 func clientFromEnvAsIs() {
     clientFromEnv();
 }
+
+func testAnUnreachableServerIsANetError() {
+    # a closed loopback port refuses the connection; the http module's
+    # net.NetError comes through unchanged, its fields readable
+    def r as rest.Client init rest.client("http://127.0.0.1:1");
+    $r.options = requestPolicy(client("eyJhbGciOiJIUzI1NiJ9.token"));
+    try {
+        runGet($r, "/3/movie/550", {}, "http://127.0.0.1:1/3/movie/550");
+        throw Error{kind: "missed", message: "runGet did not throw"};
+    } catch (e) {
+        testing.assertEqual($e.kind, "net");
+        testing.assertEqual($e.reason, "refused");
+        testing.assertEqual($e.op, "connect");
+        testing.assertFalse($e.sent);
+        testing.assertFalse($e.replied);
+    }
+}

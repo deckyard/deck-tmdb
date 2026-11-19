@@ -116,7 +116,6 @@ Not in scope:
 - No loopback fake covers the request path end to end; transport behaviour
   is tested through its helpers (one test points the GET path at a closed
   loopback port).
-- No live validation run is recorded.
 - Genre ids differ between films and series, and image size lists differ per
   image kind; the deck checks sizes but leaves genre ids to the caller.
 

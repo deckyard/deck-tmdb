@@ -27,7 +27,11 @@ def nineties as tmdb.DiscoverFilter init tmdb.releasedBetween(
 
 io.printf("best-rated animation of the nineties\n");
 for (def m in tmdb.discoverMovies($c, $nineties, 1).results) {
-    io.printf("  %.1f  %-44s %s\n", $m.voteAverage, $m.title, tmdb.year($m.releaseDate));
+    io.printf(
+        "  %f|prec=1  %s|pad=44|align=left %s\n",
+        $m.voteAverage,
+        $m.title,
+        tmdb.year($m.releaseDate));
 }
 
 # the same semantic filter reads differently on each catalogue
@@ -41,7 +45,7 @@ def hbo as tmdb.DiscoverFilter init tmdb.withShowStatus(
 
 io.printf("\nHBO, still in production\n");
 for (def s in tmdb.discoverShows($c, $hbo, 1).results) {
-    io.printf("  %-44s %s\n", $s.name, tmdb.year($s.firstAirDate));
+    io.printf("  %s|pad=44|align=left %s\n", $s.name, tmdb.year($s.firstAirDate));
 }
 
 # running a series filter against films is an error, not a shrug
@@ -63,5 +67,9 @@ $tonight = tmdb.sortedBy($tonight, tmdb.SORT_RATING_DESC);
 
 io.printf("\nKorean thrillers streaming on Netflix in Germany\n");
 for (def m in tmdb.discoverMoviesAll($c, $tonight, 2)) {
-    io.printf("  %.1f  %-44s %s\n", $m.voteAverage, $m.title, tmdb.year($m.releaseDate));
+    io.printf(
+        "  %f|prec=1  %s|pad=44|align=left %s\n",
+        $m.voteAverage,
+        $m.title,
+        tmdb.year($m.releaseDate));
 }

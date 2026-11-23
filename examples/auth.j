@@ -54,7 +54,11 @@ io.printf("\nacting for a user: %t\n", tmdb.hasUser($c));
 def mine as tmdb.ListPage init tmdb.accountLists($c, $granted.accountId, 1);
 io.printf("%d custom lists\n", $mine.totalResults);
 for (def l in $mine.results) {
-    io.printf("  %7d  %-28s %3d items\n", $l.id, $l.name, $l.numberOfItems);
+    io.printf(
+        "  %d|pad=7  %s|pad=28|align=left %d|pad=3 items\n",
+        $l.id,
+        $l.name,
+        $l.numberOfItems);
 }
 
 # dropping the token locally leaves a working credential behind; end it

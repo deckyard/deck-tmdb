@@ -42,14 +42,14 @@ for (def actor in $b.credits.cast) {
     if ($shown >= 6) {
         break;
     }
-    io.printf("  %-24s %s\n", $actor.name, $actor.character);
+    io.printf("  %s|pad=24|align=left %s\n", $actor.name, $actor.character);
     $shown = $shown + 1;
 }
 
 io.printf("\ntrailers\n");
 for (def v in $b.videos) {
     if ($v.kind == "Trailer") {
-        io.printf("  %-40s %s\n", $v.name, tmdb.videoUrl($v));
+        io.printf("  %s|pad=40|align=left %s\n", $v.name, tmdb.videoUrl($v));
     }
 }
 
@@ -73,5 +73,5 @@ for (def p in $here.flatrate) {
 
 io.printf("\nin cinemas here now\n");
 for (def m in tmdb.nowPlaying($c, 1).results) {
-    io.printf("  %-44s %s\n", $m.title, tmdb.year($m.releaseDate));
+    io.printf("  %s|pad=44|align=left %s\n", $m.title, tmdb.year($m.releaseDate));
 }

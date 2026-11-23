@@ -19,7 +19,7 @@ def c as tmdb.Client init tmdb.clientFromEnv();
 io.printf("trending today\n");
 for (def item in tmdb.trendingAll($c, tmdb.TREND_DAY, 1).results) {
     io.printf(
-        "  %-8s %-44s %s\n",
+        "  %s|pad=8|align=left %s|pad=44|align=left %s\n",
         tmdb.mediaKindName($item.kind),
         $item.title,
         tmdb.year($item.releaseDate));
@@ -29,12 +29,19 @@ for (def item in tmdb.trendingAll($c, tmdb.TREND_DAY, 1).results) {
 def index as map of string to string init tmdb.genreIndex(tmdb.movieGenres($c));
 io.printf("\npopular films, with their genres named\n");
 for (def m in tmdb.popularMovies($c, 1).results) {
-    io.printf("  %-40s %s\n", $m.title, strings.join(tmdb.genreNames($index, $m.genreIds), ", "));
+    io.printf(
+        "  %s|pad=40|align=left %s\n",
+        $m.title,
+        strings.join(tmdb.genreNames($index, $m.genreIds), ", "));
 }
 
 io.printf("\nGerman film certifications, gentlest first\n");
 for (def rating in tmdb.certificationsIn(tmdb.movieCertifications($c), "DE")) {
-    io.printf("  %-6s %d  %s\n", $rating.certification, $rating.order, $rating.meaning);
+    io.printf(
+        "  %s|pad=6|align=left %d  %s\n",
+        $rating.certification,
+        $rating.order,
+        $rating.meaning);
 }
 
 io.printf("\nthe first ten streaming services in Germany\n");
@@ -43,7 +50,7 @@ for (def p in tmdb.movieProviders($c, "DE")) {
     if ($shown >= 10) {
         break;
     }
-    io.printf("  %4d %s\n", $p.providerId, $p.providerName);
+    io.printf("  %d|pad=4 %s\n", $p.providerId, $p.providerName);
     $shown = $shown + 1;
 }
 

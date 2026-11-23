@@ -18,7 +18,11 @@ def c as tmdb.Client init tmdb.clientFromEnv();
 def films as tmdb.MoviePage init tmdb.searchMovies($c, "blade runner", 1);
 io.printf("%d films match \"blade runner\"\n", $films.totalResults);
 for (def m in $films.results) {
-    io.printf("  %-44s %s  %.1f\n", $m.title, tmdb.year($m.releaseDate), $m.voteAverage);
+    io.printf(
+        "  %s|pad=44|align=left %s  %f|prec=1\n",
+        $m.title,
+        tmdb.year($m.releaseDate),
+        $m.voteAverage);
 }
 
 # the year disambiguates a remake from its original
@@ -34,7 +38,7 @@ for (def p in tmdb.searchPeople($c, "chris evans", 1).results) {
     for (def title in $p.knownFor) {
         $known[] = $title.title;
     }
-    io.printf("  %-22s %s\n", $p.name, strings.join($known, ", "));
+    io.printf("  %s|pad=22|align=left %s\n", $p.name, strings.join($known, ", "));
 }
 
 # one ranked list across all three catalogues, split apart again
@@ -47,7 +51,7 @@ io.printf(
 
 for (def item in $mixed.results) {
     io.printf(
-        "  %-8s %-40s %s\n",
+        "  %s|pad=8|align=left %s|pad=40|align=left %s\n",
         tmdb.mediaKindName($item.kind),
         $item.title,
         tmdb.year($item.releaseDate));

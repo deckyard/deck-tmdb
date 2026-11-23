@@ -49,7 +49,7 @@ for (def poster in $images.posters) {
         break;
     }
     io.printf(
-        "  %-4s %.1f (%3d votes)  %s\n",
+        "  %s|pad=4|align=left %f|prec=1 (%d|pad=3 votes)  %s\n",
         $poster.language,
         $poster.voteAverage,
         $poster.voteCount,
@@ -60,5 +60,9 @@ for (def poster in $images.posters) {
 # TMDB hosts no video - a Video is a site and a key
 io.printf("\nvideos\n");
 for (def v in tmdb.movieVideos($c, 550)) {
-    io.printf("  %-10s %-36s %s\n", $v.kind, $v.name, tmdb.videoUrl($v));
+    io.printf(
+        "  %s|pad=10|align=left %s|pad=36|align=left %s\n",
+        $v.kind,
+        $v.name,
+        tmdb.videoUrl($v));
 }

@@ -27,7 +27,7 @@ if (not tmdb.hasUser($c) or $id == "") {
 def watchlist as tmdb.MoviePage init tmdb.watchlistMovies($c, $id, 1, tmdb.ACCOUNT_SORT_ADDED_DESC);
 io.printf("watchlist: %d films\n", $watchlist.totalResults);
 for (def m in $watchlist.results) {
-    io.printf("  %-44s %s\n", $m.title, tmdb.year($m.releaseDate));
+    io.printf("  %s|pad=44|align=left %s\n", $m.title, tmdb.year($m.releaseDate));
 }
 
 def favourites as tmdb.MoviePage init tmdb.favoriteMovies(
@@ -37,7 +37,7 @@ def favourites as tmdb.MoviePage init tmdb.favoriteMovies(
     tmdb.ACCOUNT_SORT_RATING_DESC);
 io.printf("\nfavourites: %d films\n", $favourites.totalResults);
 for (def m in $favourites.results) {
-    io.printf("  %.1f  %s\n", $m.voteAverage, $m.title);
+    io.printf("  %f|prec=1  %s\n", $m.voteAverage, $m.title);
 }
 
 def rated as tmdb.ShowPage init tmdb.ratedShows($c, $id, 1, "");
@@ -47,7 +47,11 @@ io.printf("\nrated: %d series\n", $rated.totalResults);
 # account has rated, favourited and listed
 io.printf("\nrecommended for you\n");
 for (def m in tmdb.recommendedMovies($c, $id, 1).results) {
-    io.printf("  %.1f  %-44s %s\n", $m.voteAverage, $m.title, tmdb.year($m.releaseDate));
+    io.printf(
+        "  %f|prec=1  %s|pad=44|align=left %s\n",
+        $m.voteAverage,
+        $m.title,
+        tmdb.year($m.releaseDate));
 }
 
 # the v3 account id is a different thing, and saying so is worth doing

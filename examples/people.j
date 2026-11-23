@@ -40,7 +40,7 @@ io.printf("\n%s\n", $p.biography);
 # a filmography is unordered and mixes every job - narrow it
 io.printf("\ndirected\n");
 for (def one in tmdb.creditsInDepartment($b.credits, "Directing")) {
-    io.printf("  %-40s %s\n", $one.title, tmdb.year($one.releaseDate));
+    io.printf("  %s|pad=40|align=left %s\n", $one.title, tmdb.year($one.releaseDate));
 }
 
 io.printf("\nappeared in\n");
@@ -49,7 +49,11 @@ for (def role in $b.credits.cast) {
     if ($shown >= 10) {
         break;
     }
-    io.printf("  %-40s %-24s %s\n", $role.title, $role.character, tmdb.year($role.releaseDate));
+    io.printf(
+        "  %s|pad=40|align=left %s|pad=24|align=left %s\n",
+        $role.title,
+        $role.character,
+        tmdb.year($role.releaseDate));
     $shown = $shown + 1;
 }
 

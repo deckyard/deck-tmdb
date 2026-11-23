@@ -29,7 +29,11 @@ io.printf("TheTVDB id %d\n\n", $b.externalIds.tvdbId);
 
 # `seasons` is the index into the rest of the catalogue
 for (def entry in $s.seasons) {
-    io.printf("  %-12s %3d episodes  %s\n", $entry.name, $entry.episodeCount, $entry.airDate);
+    io.printf(
+        "  %s|pad=12|align=left %d|pad=3 episodes  %s\n",
+        $entry.name,
+        $entry.episodeCount,
+        $entry.airDate);
 }
 
 # reach one by number, not by index - season 0 is only there when it exists
@@ -39,7 +43,7 @@ io.printf("\nseason 1 has %d episodes\n", $first.episodeCount);
 def one as tmdb.Season init tmdb.season($c, $s.id, 1);
 for (def e in $one.episodes) {
     io.printf(
-        "  %dx%02d  %-36s %s  %.1f\n",
+        "  %dx%d|pad=2|fill=0  %s|pad=36|align=left %s  %f|prec=1\n",
         $e.seasonNumber,
         $e.episodeNumber,
         $e.name,
@@ -55,7 +59,7 @@ for (def actor in $b.credits.cast) {
         break;
     }
     io.printf(
-        "  %-24s %-28s %3d episodes\n",
+        "  %s|pad=24|align=left %s|pad=28|align=left %d|pad=3 episodes\n",
         $actor.name,
         $actor.roles[0].character,
         $actor.totalEpisodeCount);

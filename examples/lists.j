@@ -40,7 +40,11 @@ def added as tmdb.ItemsResponse init tmdb.addListItems(
     ]);
 io.printf("\nadd: %s\n", $added.statusMessage);
 for (def outcome in $added.results) {
-    io.printf("  %-6s %7d  %t\n", tmdb.mediaKindName($outcome.kind), $outcome.id, $outcome.success);
+    io.printf(
+        "  %s|pad=6|align=left %d|pad=7  %t\n",
+        tmdb.mediaKindName($outcome.kind),
+        $outcome.id,
+        $outcome.success);
 }
 
 # a list holds films and series and nothing else
@@ -55,7 +59,7 @@ def l as tmdb.ListDetails init tmdb.listDetails($c, $listId, 1);
 io.printf("\n%s by %s - %d items\n", $l.name, $l.createdByUsername, $l.itemCount);
 for (def item in $l.results) {
     io.printf(
-        "  %-6s %-40s %s\n",
+        "  %s|pad=6|align=left %s|pad=40|align=left %s\n",
         tmdb.mediaKindName($item.kind),
         $item.title,
         tmdb.year($item.releaseDate));

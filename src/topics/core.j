@@ -547,7 +547,7 @@ export func year(date as string) {
     if (len($text) < 4) {
         return "";
     }
-    def head as string init strings.substring($text, 0, 4);
+    def head as string init $text[..4];
     if (not isDigits($head)) {
         return "";
     }

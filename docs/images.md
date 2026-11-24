@@ -1,6 +1,6 @@
 # Images and videos
 
-TMDB returns image *paths* (`/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg`), not URLs. A
+TMDB™ returns image *paths* (`/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg`), not URLs. A
 URL is a CDN host, a size and the path; the host and the valid sizes come from
 `/configuration` and can change.
 
@@ -88,8 +88,8 @@ stills, a person profiles; the rest are empty.
 
 ## Videos
 
-A `Video` is a `site` and a `key`. `tmdb.videoUrl` builds the link for YouTube
-and Vimeo and returns `""` for any other site or an empty key.
+A `Video` is a `site` and a `key`. `tmdb.videoUrl` builds the link for YouTube™
+and Vimeo™ and returns `""` for any other site or an empty key.
 `tmdb.videoThumbnailUrl` works for YouTube only (`hqdefault.jpg`); a Vimeo
 thumbnail needs a call to Vimeo's API.
 

@@ -64,10 +64,10 @@ for (def p in tmdb.movieProviders($c, "DE")) {
 `providerRegions` lists the countries with provider data: the valid watch
 regions for `availableOn` and for `offersIn`. `movieProviders` and
 `showProviders` list the services in a country, or in every country for `""`.
-A provider id is the same in every country. `displayPriority` is TMDB's
+A provider id is the same in every country. `displayPriority` is TMDB™'s
 suggested order, lowest first.
 
-> This is JustWatch data. TMDB's terms require attribution when you display
+> This is JustWatch™ data. TMDB's terms require attribution when you display
 > it.
 
 ## Change feeds

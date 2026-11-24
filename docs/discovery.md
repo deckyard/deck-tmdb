@@ -4,7 +4,7 @@ Discovery filters the catalogue by criteria (*Japanese animation from the
 nineties, over a thousand votes, best rated first*); [search](searching.md)
 ranks by words a person typed.
 
-TMDB names many discovery parameters differently on the two catalogues: films
+TMDB™ names many discovery parameters differently on the two catalogues: films
 filter on `primary_release_date.gte` and sort by `title.asc`, series on
 `first_air_date.gte` and `name.asc`. The server ignores a parameter from the
 wrong catalogue without an error. A `DiscoverFilter` therefore stores the

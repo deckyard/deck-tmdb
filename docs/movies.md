@@ -10,7 +10,7 @@ io.printf("%d min, %s\n", $film.runtime, $film.status);
 io.printf("%s\n", $film.tagline);
 ```
 
-A value TMDB does not have reads as zero: an unreleased film has `runtime` 0
+A value TMDB™ does not have reads as zero: an unreleased film has `runtime` 0
 and `releaseDate` "", and many films have `budget` and `revenue` 0 because no
 figures were filed.
 
@@ -124,7 +124,7 @@ for (def p in $here.rent) {
 `offersIn` returns a zeroed `WatchOffers` for a country with no offers. The
 buckets `flatrate`, `rent`, `buy`, `ads` and `free` are often empty.
 
-> The data is JustWatch's, and TMDB's terms require attributing it when you
+> The data is JustWatch™'s, and TMDB's terms require attributing it when you
 > display it. Availability changes weekly; do not cache it for long.
 
 ## Curated lists

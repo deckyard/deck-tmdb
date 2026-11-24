@@ -5,12 +5,12 @@
 [![release](https://img.shields.io/github/v/release/deckyard/deck-tmdb)](https://github.com/deckyard/deck-tmdb/releases/latest)
 
 A typed [Jennifer](https://jennifer-lang.dev) client for
-[The Movie Database](https://www.themoviedb.org). One `Client` reaches both
+[The Movie Database™](https://www.themoviedb.org). One `Client` reaches both
 API generations: the v3 catalogue (search, discovery, films, series, people,
 images, watch providers) and v4 user authentication, accounts and custom
 lists. Replies are folded into structs, arguments are checked before the
 request, and every failure is a `TmdbError` (kind `"tmdb"`, with the HTTP
-`status` and TMDB's `statusCode`).
+`status` and TMDB™'s `statusCode`).
 
 ## Install
 
@@ -61,4 +61,14 @@ This product uses the TMDB API but is **not endorsed or certified by TMDB**.
 Using the API means agreeing to its
 [terms of use](https://www.themoviedb.org/api-terms-of-use), which require
 attribution in any application built on it. The watch-provider data is
-JustWatch's and carries its own attribution requirement.
+JustWatch™'s and carries its own attribution requirement.
+
+## Trademarks
+
+JustWatch™ is a trademark of JustWatch GmbH. YouTube™ is a trademark of
+Google LLC. Vimeo™ is a trademark of Vimeo.com, Inc. IMDb™ is a trademark of
+IMDb.com, Inc. TMDB™, The Movie Database™ and other product and company
+names may be trademarks of their respective owners. They are used only to
+identify the products this deck works with. This deck is an independent
+project, not affiliated with, sponsored or endorsed by TMDB, JustWatch GmbH
+or any other service named here.

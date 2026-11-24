@@ -5,7 +5,7 @@
 
 ## Scope
 
-`@deckyard/tmdb` is a typed client for The Movie Database API: the v3
+`@deckyard/tmdb` is a typed client for The Movie Database™ API: the v3
 catalogue (search, discovery, films, series, seasons, episodes, people,
 collections, companies, networks, keywords, reviews, images, videos, watch
 providers, trending, change feeds, lookups by external id) and v4 user
@@ -17,7 +17,7 @@ Not in scope:
 - **Downloading images.** The deck builds image and video URLs
   (`/configuration` sizes checked per image kind); fetching the bytes is the
   caller's choice.
-- **Caching and rate-limit bookkeeping.** TMDB's limits are answered by
+- **Caching and rate-limit bookkeeping.** TMDB™'s limits are answered by
   retrying 429 with backoff; a cache belongs to the application.
 - **Endpoints without a typed verb.** `call`, `callPost`, `callPut` and
   `callDelete` reach them and return decoded JSON.

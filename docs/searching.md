@@ -72,7 +72,7 @@ for (def item in $hits.results) {
 
 ## People with the same name
 
-A person row's `knownFor` holds the titles TMDB associates with them:
+A person row's `knownFor` holds the titles TMDB™ associates with them:
 
 ```jennifer
 for (def p in tmdb.searchPeople($c, "chris evans", 1).results) {

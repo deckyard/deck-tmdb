@@ -29,7 +29,7 @@ tmdb.favoriteMovies($c, "548", 1, "");
 
 ## Sorting
 
-Favourites, ratings and watchlists take a sort order; `""` is TMDB's default.
+Favourites, ratings and watchlists take a sort order; `""` is TMDB™'s default.
 
 | constant | orders by |
 | --- | --- |

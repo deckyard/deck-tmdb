@@ -1,6 +1,6 @@
 # Custom lists
 
-Custom lists are the only part of TMDB this deck **writes**. Reading a public
+Custom lists are the only part of TMDB™ this deck **writes**. Reading a public
 list needs only the application token (`listDetails`, `listItemsAll`,
 `listItemStatus`); every other verb here needs the owner's user access token
 (see [Authenticating a user](authentication.md)).

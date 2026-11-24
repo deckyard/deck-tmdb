@@ -1,6 +1,6 @@
 # Series, seasons and episodes
 
-TMDB's `tv` catalogue is called *shows* in this deck; the wire still says
+TMDB™'s `tv` catalogue is called *shows* in this deck; the wire still says
 `tv`. Seasons and episodes are addressed by number under their series, not by
 ids of their own:
 
@@ -139,7 +139,7 @@ def ordering as json.Value init tmdb.call($c, "/3/tv/episode_group/" + $groupId,
 ## External ids
 
 `ExternalIds.tvdbId` is filled for series, which matters to media servers that
-index by TheTVDB:
+index by TheTVDB™:
 
 ```jennifer
 tmdb.showExternalIds($c, 1399);

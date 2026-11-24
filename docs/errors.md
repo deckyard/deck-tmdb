@@ -12,7 +12,7 @@ export def struct TmdbError {
 };
 ```
 
-`status` is the HTTP status of a refusal and `statusCode` TMDB's own
+`status` is the HTTP status of a refusal and `statusCode` TMDB™'s own
 `status_code` from its body (7 an invalid key, 34 not found); both are 0 for
 a bad argument or a timeout. Two failures keep their own kind: a reply body
 past the transport's size cap stays `Error{kind: "limit"}`, and a server that

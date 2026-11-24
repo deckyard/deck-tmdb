@@ -4,7 +4,7 @@ The records films and series point at. Each has its own id space.
 
 ## Collections
 
-A collection is a franchise box set (*Star Wars Collection*).
+A collection is a franchise box set (*Star Wars™ Collection*).
 
 ```jennifer
 def set as tmdb.Collection init tmdb.collection($c, 10);
@@ -15,7 +15,7 @@ for (def part in $set.parts) {
 }
 ```
 
-`parts` is in TMDB's order, which is release order, not story order: the
+`parts` is in TMDB™'s order, which is release order, not story order: the
 *Star Wars* collection starts at Episode IV.
 
 Reach one from a film or by search:
@@ -43,14 +43,14 @@ tmdb.companyAlternativeNames($c, 41077);   # other trading names
 tmdb.companyImages($c, 41077);             # logos, in Images.logos
 ```
 
-`parentCompanyId` links a studio to its parent (Marvel Studios to Disney) and
+`parentCompanyId` links a studio to its parent (Marvel™ Studios to Disney™) and
 is `0` for an independent. Company ids are what discovery's `withCompanies`
 takes; find them with `tmdb.searchCompanies`.
 
 ## Networks
 
 Networks have the same shape as companies but a separate id space: network 49
-is HBO, company 49 is not.
+is HBO™, company 49 is not.
 
 ```jennifer
 def n as tmdb.NetworkDetails init tmdb.network($c, 49);
@@ -98,7 +98,7 @@ io.printf("%s played %s in %s\n",
 
 ## Finding a TMDB record by an outside id
 
-`tmdb.find` looks up an IMDb, TheTVDB, Wikidata or social-media id:
+`tmdb.find` looks up an IMDb™, TheTVDB™, Wikidata™ or social-media id:
 
 ```jennifer
 def hits as tmdb.FindResults init tmdb.findByImdb($c, "tt0903747");

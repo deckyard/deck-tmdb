@@ -11,7 +11,7 @@ io.printf("known for %s\n", $p.knownForDepartment);
 io.printf("%s\n", $p.biography);
 ```
 
-`deathday` is `""` for the living and when TMDB has no date. `gender` is
+`deathday` is `""` for the living and when TMDB™ has no date. `gender` is
 TMDB's code: `0` unknown, `1` female, `2` male, `3` non-binary;
 `tmdb.genderName` turns it into `"unknown"`, `"female"`, `"male"` or
 `"non-binary"`.
@@ -83,8 +83,8 @@ for (def photo in tmdb.personImages($c, 31).profiles) {
 
 ## External ids
 
-`tmdb.personExternalIds` returns the IMDb `nm...` id and the social handles
-(Instagram, TikTok, YouTube ...). A field is `""` when TMDB has no id of that
+`tmdb.personExternalIds` returns the IMDb™ `nm...` id and the social handles
+(Instagram™, TikTok™, YouTube™ ...). A field is `""` when TMDB has no id of that
 kind, which is common for everything but `imdbId`.
 
 ```jennifer

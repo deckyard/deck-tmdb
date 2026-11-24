@@ -26,7 +26,7 @@ failing at the first request.
 
 ## Get a token
 
-[Settings -> API](https://www.themoviedb.org/settings/api) on a TMDB account
+[Settings -> API](https://www.themoviedb.org/settings/api) on a TMDB™ account
 shows two credentials (the page does not work well on mobile; use a desktop
 browser):
 

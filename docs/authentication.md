@@ -2,7 +2,7 @@
 
 The catalogue chapters read public data with the application's token. The
 account and list endpoints act for a person and need a **user access token**,
-which TMDB's v4 approval flow mints in three steps; the second happens in a
+which TMDB™'s v4 approval flow mints in three steps; the second happens in a
 browser.
 
 ```

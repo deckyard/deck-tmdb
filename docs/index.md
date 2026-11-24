@@ -1,6 +1,6 @@
 # @deckyard/tmdb
 
-A typed Jennifer client for [The Movie Database](https://www.themoviedb.org).
+A typed Jennifer client for [The Movie Database™](https://www.themoviedb.org).
 
 This deck is part of [Deckyard](https://github.com/deckyard), community decks for [Jennifer](https://jennifer-lang.dev/).
 
@@ -18,7 +18,7 @@ for (def m in $hits.results) {
 
 ## v3 and v4
 
-TMDB serves two API generations from one host, `https://api.themoviedb.org`.
+TMDB™ serves two API generations from one host, `https://api.themoviedb.org`.
 **v4** (`/4/...`) has bearer authentication, the user approval flow, accounts
 and custom lists, but cannot search or describe a film. **v3** (`/3/...`) has
 the catalogue: films, series, seasons, episodes, people, credits, images,
@@ -71,4 +71,14 @@ This product uses the TMDB API but is **not endorsed or certified by TMDB**.
 Using the API means agreeing to its
 [terms of use](https://www.themoviedb.org/api-terms-of-use), which require you
 to attribute TMDB in any application built on it. The watch-provider data is
-JustWatch's and carries its own attribution requirement.
+JustWatch™'s and carries its own attribution requirement.
+
+## Trademarks
+
+JustWatch™ is a trademark of JustWatch GmbH. YouTube™ is a trademark of
+Google LLC. Vimeo™ is a trademark of Vimeo.com, Inc. IMDb™ is a trademark of
+IMDb.com, Inc. TMDB™, The Movie Database™ and other product and company
+names may be trademarks of their respective owners. They are used only to
+identify the products this deck works with. This deck is an independent
+project, not affiliated with, sponsored or endorsed by TMDB, JustWatch GmbH
+or any other service named here.

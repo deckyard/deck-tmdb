@@ -24,7 +24,7 @@ Building and configuring a client, and the escape hatches for endpoints without 
 | `DEFAULT_BACKOFF_MS` | `500` | Base delay of a fresh client before a retry, in milliseconds. |
 | `MAX_RESPONSE_BYTES` | `16777216` | Largest response body the client reads, in bytes (16 MiB). |
 | `DEFAULT_LANGUAGE` | `"en-US"` | The `language` a fresh client sends. |
-| `MAX_PAGE` | `500` | Highest page number TMDB serves. |
+| `MAX_PAGE` | `500` | Highest page number TMDB™ serves. |
 
 | function | returns | what it does |
 | --- | --- | --- |
@@ -327,7 +327,7 @@ Every image attached to one object, by kind.
 
 ### `Video`
 
-A trailer, teaser, clip or featurette hosted on YouTube or Vimeo.
+A trailer, teaser, clip or featurette hosted on YouTube™ or Vimeo™.
 
 | field | meaning |
 | --- | --- |
@@ -396,15 +396,15 @@ The same object's ids on other sites.
 | field | meaning |
 | --- | --- |
 | `imdbId as string` | e.g. "tt0076759" for a title, "nm0000158" for a person |
-| `tvdbId as int` | TheTVDB's id, series and episodes only |
-| `tvrageId as int` | the retired TVRage id |
+| `tvdbId as int` | TheTVDB™'s id, series and episodes only |
+| `tvrageId as int` | the retired TVRage™ id |
 | `wikidataId as string` | e.g. "Q17738" |
-| `facebookId as string` | a Facebook page or username |
-| `instagramId as string` | an Instagram handle |
-| `twitterId as string` | an X / Twitter handle |
-| `tiktokId as string` | a TikTok handle, people only |
+| `facebookId as string` | a Facebook™ page or username |
+| `instagramId as string` | an Instagram™ handle |
+| `twitterId as string` | an X / Twitter™ handle |
+| `tiktokId as string` | a TikTok™ handle, people only |
 | `youtubeId as string` | a YouTube channel, people only |
-| `freebaseId as string` | the retired Freebase id |
+| `freebaseId as string` | the retired Freebase™ id |
 | `freebaseMid as string` | the retired Freebase machine id |
 
 ### `Keyword`
@@ -426,7 +426,7 @@ A user review.
 | `author as string` | the display name on the review |
 | `username as string` | the reviewer's TMDB username |
 | `name as string` | the reviewer's full name, "" when not set |
-| `avatarPath as string` | an image path or an absolute Gravatar URL |
+| `avatarPath as string` | an image path or an absolute Gravatar™ URL |
 | `rating as float` | the reviewer's own score out of 10, 0 when unrated |
 | `content as string` | the review body, as Markdown |
 | `url as string` | the review's page on TMDB |
@@ -1123,9 +1123,9 @@ Guide: [Collections, companies and lookups](catalog.md).
 
 | constant | value | meaning |
 | --- | --- | --- |
-| `SOURCE_IMDB` | `"imdb_id"` | `find` source: an IMDb id, `tt0076759` for a title, `nm0000158` for a person. |
+| `SOURCE_IMDB` | `"imdb_id"` | `find` source: an IMDb™ id, `tt0076759` for a title, `nm0000158` for a person. |
 | `SOURCE_TVDB` | `"tvdb_id"` | `find` source: a TheTVDB id. |
-| `SOURCE_WIKIDATA` | `"wikidata_id"` | `find` source: a Wikidata entity id, e.g. `Q17738`. |
+| `SOURCE_WIKIDATA` | `"wikidata_id"` | `find` source: a Wikidata™ entity id, e.g. `Q17738`. |
 | `SOURCE_FACEBOOK` | `"facebook_id"` | `find` source: a Facebook page or username. |
 | `SOURCE_INSTAGRAM` | `"instagram_id"` | `find` source: an Instagram handle, without the `@`. |
 | `SOURCE_TWITTER` | `"twitter_id"` | `find` source: an X / Twitter handle, without the `@`. |

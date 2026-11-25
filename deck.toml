@@ -1,6 +1,6 @@
 [package]
 name = "@deckyard/tmdb"
-version = "0.2.0"
+version = "0.3.0"
 description = "A typed client for The Movie Database: v4 auth, accounts and lists over the full v3 catalogue"
 license = "LGPL-3.0-only"
 authors = ["mplx <mplx@jennifer-lang.dev>"]
@@ -21,6 +21,6 @@ manual = "https://deckyard.github.io/deck-tmdb/"
 
 [engines]
 # The floor every source file in this repository declares in its own header
-# pragma, and the release the test suite is run against in CI. 0.26.0 is the
-# release that carries every library and module this deck reaches for.
-jennifer = ">=0.26.0"
+# pragma, and the release the test suite is run against in CI. 0.28.0 is the
+# release whose lint flags the calls 0.29.0 removes; the deck uses none of them.
+jennifer = ">=0.28.0"

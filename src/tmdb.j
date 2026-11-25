@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: LGPL-3.0-only
 # SPDX-FileCopyrightText: Copyright (C) 2026 mplx <mplx@jennifer-lang.dev>
-# pragma-jennifer-version: >=0.26.0
+# pragma-jennifer-version: >=0.28.0
 # pragma-jennifer-capability: net
 
 /**
@@ -37,7 +37,7 @@
  * | `userlists` | v4 custom lists and their items |
  *
  * @module tmdb
- * @version 0.2.0-dev
+ * @version 0.3.0
  * @license LGPL-3.0-only
  * @see https://developer.themoviedb.org/v4/reference/getting-started
  * @see https://developer.themoviedb.org/docs/getting-started
@@ -54,6 +54,7 @@
  *   io.printf("%d min, %s\n", $film.runtime, $film.tagline);
  */
 
+use math;
 use strings;
 use lists;
 use maps;

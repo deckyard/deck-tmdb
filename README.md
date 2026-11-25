@@ -21,7 +21,7 @@ jvc add @deckyard/tmdb
 Or unpack `src/` from a release archive (`deckyard-tmdb-<version>.tar.gz`) into
 `vendor/deckyard/tmdb/`.
 
-Requires Jennifer 0.26.0 or newer and the default `jennifer` binary: the deck
+Requires Jennifer 0.28.0 or newer and the default `jennifer` binary: the deck
 declares the `net` capability, which `jennifer-tiny` lacks.
 
 ## Example

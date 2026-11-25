@@ -121,7 +121,7 @@ Not in scope:
 
 ## Dependencies on the interpreter
 
-- Floor `jennifer >=0.26.0`, the release that carries every library and
+- Floor `jennifer >=0.28.0` (the calls 0.29.0 removes are replaced by their 0.28.0 forms), the release that carries every library and
   module the deck uses; the default binary for the verbs (`jennifer-tiny`
   stubs `net`).
 - The bundled `rest`, `http` (options, retries, size cap) and `uri` modules.
